@@ -75,6 +75,15 @@ alias hyprconf="sudo $EDITOR ~/.config/hypr/hyprland.conf"
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
+# A partir de ahora, cada vez que modifiques cualquier archivo de tus dotfiles, solo tendrás que escribir:
+# dotcommit "descripción de lo que cambiaste"
+
+dotcommit() {
+    config add -u
+    config commit -m "${1:-update dotfiles}"
+    config push
+}
+
 # Activar el modo Vi en Zsh
 bindkey -v
 
