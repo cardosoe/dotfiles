@@ -1,0 +1,14 @@
+[Unit]
+Description=Sincronizar mbsync e indexar con Notmuch de fondo
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/mbsync -c /home/ezequiel/.config/mu4e/mbsyncrc -a
+ExecStartPost=/usr/bin/notmuch new
+# Lanza la notificación nativa usando el paquete del AUR instalado
+#ExecStartPost=/usr/bin/notifymuch
+
+[Install]
+WantedBy=default.target
+

@@ -71,6 +71,10 @@ alias spdl="spotify-dl --format mp3 --destination ~/Music/"
 
 alias hyprconf="sudo $EDITOR ~/.config/hypr/hyprland.conf"
 
+# Jupyter Notebooks
+
+alias ein-run="source ~/.venvs/finanzas/bin/activate; jupyter notebook --no-browser"
+
 # Dotfiles
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
