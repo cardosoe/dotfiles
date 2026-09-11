@@ -1,104 +1,12 @@
 # mbsyncrc based on
 # http://www.ict4g.net/adolfo/notes/2014/12/27/EmacsIMAP.html
 
-# ACCOUNT INFORMATION
-#IMAPAccount ezequielcardoso@gmail.com
-# Address to connect to
-#Host imap.gmail.com
-#User ezequielcardoso@gmail.com
-# Create a plain text file that contains your password. Name it mbsyncpass-acc1. 
-# Then, gpg encrypt it by running: gpg2 -c mbsyncpass-acc1
-# Then delete the plain text file, leaving only mbsyncpass-acc1.gpg.
-#PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.config/mu4e/mbsyncpass-acc1.gpg"
-#AuthMechs LOGIN
-#TLSType IMAPS
-#TLSVersions TLSv1.2
-#CertificateFile /etc/ssl/certs/ca-certificates.crt
-
-# THEN WE SPECIFY THE LOCAL AND REMOTE STORAGE
-# - THE REMOTE STORAGE IS WHERE WE GET THE MAIL FROM (E.G., THE
-#   SPECIFICATION OF AN IMAP ACCOUNT)
-# - THE LOCAL STORAGE IS WHERE WE STORE THE EMAIL ON OUR COMPUTER
-
-# REMOTE STORAGE (USE THE IMAP ACCOUNT SPECIFIED ABOVE)
-#IMAPStore ezequielcardoso@gmail.com-remote
-#Account ezequielcardoso@gmail.com
-
-# LOCAL STORAGE (CREATE DIRECTORIES with mkdir -p ~/Maildir/derek-distrotube)
-#MaildirStore ezequielcardoso@gmail.com-local
-#Path ~/Maildir/
-#Path ~/Maildir/ezequielcardoso@gmail.com/INBOX
-# REQUIRED ONLY IF YOU WANT TO DOWNLOAD ALL SUBFOLDERS; SYNCING SLOWS DOWN
-#SubFolders Verbatim
-
-# CONNECTIONS SPECIFY LINKS BETWEEN REMOTE AND LOCAL FOLDERS
-#
-# CONNECTIONS ARE SPECIFIED USING PATTERNS, WHICH MATCH REMOTE MAIL
-# FOLDERS. SOME COMMONLY USED PATTERS INCLUDE:
-#
-# 1 "*" TO MATCH EVERYTHING
-# 2 "!DIR" TO EXCLUDE "DIR"
-# 3 "DIR" TO MATCH DIR
-
-#Channel ezequielcardoso@gmail.com
-#Far :ezequielcardoso@gmail.com-remote:
-#Near :ezequielcardoso@gmail.com-local:
-#Patterns *
-#Create Both
-#Expunge Both
-#SyncState *
-
-
-# ACCOUNT INFORMATION
-#IMAPAccount ezequielcardoso@gmail.com
-#Address to connect to
-#Host imap.gmail.com
-#User ezequielcardoso@gmail.com
-#Pass xwkhlknrnylwtayg
-#AuthMechs LOGIN
-#TLSType IMAPS
-#CertificateFile /etc/ssl/certs/ca-certificates.crt
-
-#CertificateCmd "openssl version -d | sed -e 's/OPENSSLDIR: \"//' -e 's/\"//'/certs"
-
-# remote storage
-#IMAPStore ezequielcardoso@gmail.com-remote
-#IMAPStore gmail-remote
-#Account ezequielcardoso@gmail.com
-
-# local storage
-#MaildirStore ezequielcardoso@gmail.com-local
-#Path ~/Maildir/
-#Inbox ~/Maildir/Inbox
-#Subfolders Verbatim
-
-# channel to remote storage
-# Channel gmail
-# Far :gmail-remote:
-# Near :gmail-loca:
-# Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gamil]/Bin"
-# Create Both
-# SyncState *
-
-
-#Channel ezequielcardoso@gmail.com
-#Far :ezequielcardoso@gmail.com-remote:
-#Near :ezequielcardoso@gmail.com-local:
-#Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gamil]/Bin"
-#Patterns *
-#Create Both
-#Expunge Both
-#SyncState *
-#
-#
 # ================================================================================
 # ACCOUNT INFORMATION
 IMAPAccount ezequielcardoso@gmail.com
 Host imap.gmail.com
 User ezequielcardoso@gmail.com
-#Pass xwkhlknrnylwtayg
 PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/^machine imap\\.gmail\\.com/ {print $6; exit}'"
-#PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/://gmail.com/ {print $6}'"
 AuthMechs LOGIN
 TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
