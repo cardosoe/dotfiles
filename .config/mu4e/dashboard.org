@@ -1,0 +1,21 @@
+#+TITLE: Panel de Correo de Ezequiel
+#+STARTUP: showall
+
+* 📥 Bandeja de Entrada
+  - [[mu:flag:unread AND NOT flag:trashed][No leídos en total]] (%d)
+  - [[mu:date:today..now][Recibidos hoy]] (%d)
+  - [[mu:date:7d..now][Últimos 7 días]] (%d)
+
+* 🏷️ Categorías Personales
+  - [[mu:Arch OR arch OR "Arch Linux" OR "arch linux" OR arch-linux OR Arch-Linux][🐧 Arch Linux]] (%d)
+  - [[mu:emacs OR org OR orgmode OR "org-mode" OR mu4e][📋 Emacs & Org]] (%d)
+  - [[mu:"web dev" OR web OR html OR css OR javascript OR php OR laravel OR python OR wordpress OR programación OR code OR coding][💻 Programación]] (%d)
+  - [[mu:jr OR remoto OR trabajo OR work OR remote][💼 Búsqueda Laboral]] (%d)
+
+* 👥 Círculos Primarios
+  - [[mu:hola@zoeraijman.com OR luciocardosoraijman@gmail.com][🏠 Familia]] (%d)
+  - [[mu:facturas@escueladantecordoba.edu.ar OR escueladantealighieri@miescueladigital.com.ar OR preceptoria1c@escueladantecordoba.edu.ar][🏫 Dante Alighieri]] (%d)
+  - [[mu:no-reply@invertironline.com OR invertironline OR no-reply@cocos.capital OR investing.com OR rankia OR noreply@cajadevalores.com.ar OR atencion@cocos.capital][📈 Inversiones]] (%d)
+
+* 📎 Adjuntos Pesados
+  - [[mu:size:5M..500M][📦 Mensajes Grandes (>5MB)]] (%d)
