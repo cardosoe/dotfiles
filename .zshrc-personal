@@ -1,0 +1,148 @@
+# If you come from bash you might have to change your $PATH.
+ export PATH="$HOME/.local/bin:$PATH"
+ export PATH=$HOME/bin:/usr/local/bin:$PATH
+ export XDG_CURRENT_DESKTOP=LXDE
+ export INTELEPHENSE_LICENSE_KEY="001Q2P7WRFIBNDO"
+PATH="$HOME/bin/doom:$PATH"
+PATH="$HOME/.config/emacs/bin:$PATH"
+PATH="$HOME/usr/bin/emacsclient:$PATH"
+PATH="$HOME/usr/bin/mu:$PATH"
+PATH="$HOME/usr/bin/msmtp:$PATH"
+PATH="$HOME/ezequiel/.local/bin/lvim:$PATH"
+PATH="$HOME/usr/bin/mk2html:$PATH"
+PATH="$HOME/usr/bin/markdown:$PATH"
+PATH="$HOME/usr/bin/plantuml:$PATH"
+PATH="$HOME/usr/bin/brave:$PATH"
+PATH="$HOME/ezequiel/.local/go/bin/go:$PATH"
+PATH="$HOME/ezequiel/go/bin/bootdev:$PATH"
+PATH="$HOME/ezequiel/.pyenv/shims/anaconda:$PATH"
+PATH="$HOME/ezequiel/.local/bin/rofi-beats-linux.py:$PATH"
+PATH="$HOME/ezequiel/.local/bin/jupyter:$PATH"
+
+export PATH="~/.local/bin/rofi-beats-linux.py:$PATH"
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH="~/.composer/vendor/bin:$PATH"
+export PATH="/usr/bin/intelephense:$PATH"
+export PATH="/home/ezequiel/worldbanc/private/bin/:$PATH"
+export PATH="/home/ezequiel/worldbanc/private/bin/process_transactions.sh:$PATH"
+export PATH="/home/ezequiel/scripts/dmenuscripts/scripts:$PATH"
+export PATH="/home/ezequiel/scripts/:$PATH"
+#Folders url
+
+#alias projects='cd /srv/http/projects/'
+alias wp='cd /opt/lampp/htdocs/projects/wordpress/'
+alias projects='cd /opt/lampp/htdocs/projects/'
+alias blog='cd /~/blog/'
+alias wallpapers='/usr/share/backgrounds/arcolinux/'
+
+#Defaul Browser
+
+BROWSER="/usr/bin/brave"
+
+#Alias personales
+alias zshrcConfig="$EDITOR ~/.zshrc-personal"
+alias i3config="$EDITOR ~/.config/i3/config"
+alias musica='amberol' #
+alias elTiempo='wttr cordoba+argentina' # Muestra el pronostico del tiempo en la terminal
+alias verEspacio='ncdu' # Muestra los archivos y carpetas más grandes en el disco
+alias spotify='spt' #spotify-tui en terminal
+alias em='emacsclient -nw -t'
+alias archwiki='awman'
+alias Enpass=QT_QPA_PLATFORM=xcb enpass
+alias grubCustomizer='grub-customizer'
+alias rofi-beats="~/.local/bin/rofi-beats-linux.py"
+alias xampp="sudo /opt/lampp/manager-linux-x64.run"
+alias pseint="/opt/pseint/./pseint"
+alias termusica='termusic'
+
+# Aliases Cloud Drives
+alias googledrive="rclone mount googledrive: ~/Documents/CloudDrive/googledrive/"
+alias GoogleDriveBackUp="rclone mount GoogleDriveBackUp: ~/Documents/CloudDrive/DriveBackUp/"
+#alias dropbox="rclone mount DropboxEze: ~/Documentos/CloudDrive/DropEze/"
+alias onedrive="rclone mount onedrive: ~/Documents/CloudDrive/onedrive/"
+alias Pcloud='rclone mount Pcloud: ~/Documents/CloudDrive/Pcloud/'
+alias Mega='rclone mount MegaHotmail: ~/Documents/CloudDrive/Mega/'
+
+# spotify-tui
+
+alias spdl="spotify-dl --format mp3 --destination ~/Music/"
+
+# Alias Hyprland
+
+alias hyprconf="sudo $EDITOR ~/.config/hypr/hyprland.conf"
+
+# Dotfiles
+
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+# Activar el modo Vi en Zsh
+bindkey -v
+
+# Reducir el retraso al presionar la tecla ESC (en milisegundos)
+export KEYTIMEOUT=1
+
+# Configurar que el retroceso (Backspace) funcione correctamente en modo inserción
+bindkey '^?' backward-delete-char
+bindkey '^H' backward-delete-char
+
+
+# Cambiar la forma del cursor según el modo (Barra para Insertar, Bloque para Normal)
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]]; then
+    echo -ne '\e[2m' # Cursor de bloque (Normal)
+  else
+    echo -ne '\e[5m' # Cursor de barra vertical (Insertar)
+  fi
+}
+zle -N zle-keymap-select
+
+# Asegurar que inicie en modo inserción con la barra vertical
+_fix_cursor() { echo -ne '\e[5m' }
+precmd_functions+=(_fix_cursor)
+
+
+# Sincronizar el "yank" de Zsh con el portapapeles del sistema
+vi-yank-to-clipboard() {
+  zle vi-yank
+  if command -v wl-copy &> /dev/null; then
+    echo -n "$CUTBUFFER" | wl-copy
+  elif command -v xclip &> /dev/null; then
+    echo -n "$CUTBUFFER" | xclip -selection clipboard
+  fi
+}
+zle -N vi-yank-to-clipboard
+bindkey -M vicmd 'y' vi-yank-to-clipboard
+
+
+# Cargar el editor de línea de comandos nativo de Zsh
+autoload -U edit-command-line
+zle -N edit-command-line
+
+# En Modo Normal (vicmd), presiona 'v' para abrir la línea actual en Neovim
+bindkey -M vicmd 'v' edit-command-line
+
+
+# Zsh Config
+
+# Completion
+
+zstyle ':completion::complete:*' gain-privileges 1
+# History Search
+
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+[[ -n "${key[Up]}"   ]] && bindkey -- "${key[Up]}"   up-line-or-beginning-search
+[[ -n "${key[Down]}" ]] && bindkey -- "${key[Down]}" down-line-or-beginning-search
+
+# Start SSH agent if not running
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    eval "$(ssh-agent -s)" >/dev/null 2>&1
+fi
+
+# Add GitHub SSH key if not already loaded
+if ! ssh-add -l | grep -q "github"; then
+    ssh-add ~/.ssh/github 2>/dev/null || true
+fi
+eval "$(direnv hook zsh)"
