@@ -634,7 +634,8 @@ EWW is the Emacs Web Wowser, the builtin browser in Emacs.  Below I set urls to 
 
 #+BEGIN_SRC emacs-lisp
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "brave-browser.desktop")
+      browse-url-generic-program "firefox")
+      ;;browse-url-generic-program "brave-browser.desktop")
 ;; (setq browse-url-browser-function 'eww-browse-url) ;
 (map! :leader
       :desc "Search web for text between BEG/END"
