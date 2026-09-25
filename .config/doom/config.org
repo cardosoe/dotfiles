@@ -1,4 +1,4 @@
-/#+TITLE: Doom Emacs Config
+#+TITLE: Doom Emacs Config
 #+AUTHOR: Ezequiel Cardoso
 #+DESCRIPTION: personal Doom Emacs config.
 #+HTML_HEAD: <style type="text/css">body{ max-width:50%; }</style>
@@ -29,7 +29,6 @@
   - [[#making-deleted-files-go-to-trash-can][Making deleted files go to trash can]]
 - [[#doom-theme][DOOM THEME]]
 - [[#elfeed][ELFEED]]
-- [[#emojis][EMOJIS]]
 - [[#erc][ERC]]
 - [[#evaluate-elisp-expressions][EVALUATE ELISP EXPRESSIONS]]
 - [[#eww][EWW]]
@@ -49,7 +48,6 @@
 - [[#modeline][MODELINE]]
 - [[#mouse-support][MOUSE SUPPORT]]
 - [[#lsp-company-backends][LSP-COMPANY-BACKENDS]]
-- [[#neotree-1][NEOTREE]]
 - [[#open-specific-files][OPEN SPECIFIC FILES]]
 - [[#org-mode][ORG MODE]]
 - [[#org-modern][ORG-MODERN]]
@@ -132,12 +130,12 @@ Doom Emacs uses 'SPC b' for keybindings related to bookmarks and buffers.
 ** Bookmarks
 Bookmarks are somewhat like registers in that they record positions you can jump to.  Unlike registers, they have long names, and they persist automatically from one Emacs session to the next. The prototypical use of bookmarks is to record where you were reading in various files.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (map! :leader
       (:prefix ("b". "buffer")
        :desc "List bookmarks" "L" #'list-bookmarks
        :desc "Save current bookmarks to bookmark file" "w" #'bookmark-save))
-#+END_SRC
+#+end_src
 
 ** Buffers
 Regarding /buffers/, the text you are editing in Emacs resides in an object called a /buffer/. Each time you visit a file, a buffer is used to hold the file’s text. Each time you invoke Dired, a buffer is used to hold the directory listing.  /Ibuffer/ is a program that lists all of your Emacs /buffers/, allowing you to navigate between them and filter them.
@@ -502,12 +500,12 @@ If peep-dired is enabled, you will get image previews as you go up/down with 'j'
 | peep-dired-next-file | /Move to next file in peep-dired-mode/     | j          |
 | peep-dired-prev-file | /Move to previous file in peep-dired-mode/ | k          |
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (evil-define-key 'normal peep-dired-mode-map
   (kbd "j") 'peep-dired-next-file
   (kbd "k") 'peep-dired-prev-file)
 (add-hook 'peep-dired-hook 'evil-normalize-keymaps)
-#+END_SRC
+#+end_src
 
 ** Making deleted files go to trash can
 #+begin_src emacs-lisp
@@ -518,11 +516,11 @@ If peep-dired is enabled, you will get image previews as you go up/down with 'j'
 * DOOM THEME
 Setting the theme to doom-one.  To try out new themes, I set a keybinding for counsel-load-theme with 'SPC h t'.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq doom-theme 'doom-gruvbox-light)
 (map! :leader
       :desc "Load new theme" "h t" #'consult-theme)
-#+END_SRC
+#+end_src
 
 #+RESULTS:
 : consult-theme
@@ -530,57 +528,113 @@ Setting the theme to doom-one.  To try out new themes, I set a keybinding for co
 * ELFEED
 An RSS newsfeed reader for Emacs.
 
-#+BEGIN_SRC emacs-lisp
-
+#+begin_src emacs-lisp
 (use-package elfeed
   :config
-  (setq elfeed-search-feed-face ":foreground #fff :weight bold"
-        elfeed-feeds (quote
-                       (("https://amitmerchant.com/feed.xml" Amit Merchant)
-                        ("https://tughi.github.io/aggregator-android/news.rss" Android news)
-                        ("https://archlinux.org/feeds/news/" ArchLinux)
-                        ("https://christoph-rumpel.com/feed" Cristoph Rumpel Blog)
-                        ("https://dcblog.dev/feed" DC Blog)
-                        ("https://blog.desdelinux.net/feed/" Blog desde Linux)
-                        ("https://elblogdelazaro.org/index.xml" El blog de Lázaro)
-                        ("https://linuxfoundation.org/feed/" Linux Foundation)
-                        ("https://www.linuxjournal.com/node/feed" Linux Journal)
-                        ("https://www.linux.com/feed/" Linux.com)
-                        ("https://lukesmith.xyz/rss" Luke Smith)
-                        ("https://abskmj.github.io/notes/index.xml" Abskmj)
-                        ("https://notxor.nueva-actitud.org/rss.xml" Noxtor tiene un blog)
-                        ("https:/opensource.com/feed" Opensource.com)
-                        ("https://updates.orgmode.org/feed/changes" orgmode.com)
-                        ("https://phppot.com/feed/" Php pot)
-                        ("https://tecmint.com/feed" Tecmint)
-                        ("https://tomasvotruba.com/rss.xml" Tomas Votruba)
-                        ("https://victorhckinthefreeworld.com/feed/" Victorh in the free world)
-                        ("https://stitcher.io/rss" Stitcher.io)
-                        ("http://feeds.feedburner.com/uGeekBlog" uGeekBlog) ))))
+  ;; Sintaxis correcta para personalizar la cara de los feeds
+  (setq elfeed-search-feed-face '(:foreground "#ffffff" :weight bold))  
+  
+  ;; Lista unificada de feeds RSS corregida y con paréntesis balanceados
+  (setq elfeed-feeds
+        '(;; --- EMACS, ORG-MODE & ORG-ROAM ---
+          ("https://emacslife.com" emacs planet eng)
+          ("https://sachachua.com" emacs tech eng)
+          ("https://karthinks.com" emacs dev eng)
+          ("https://protesilaos.com" emacs linux philosophy eng)
+          
+          ;; --- LINUX & ARCHLINUX ---
+          ("https://archlinux.org" arch linux critical)
+          ("https://itsfoss.com" linux tech eng)
+          ("https://phoronix.com" linux hardware benchmarks eng)
+          ("https://gamingonlinux.com" linux gaming eng)
+
+          ;; --- FINANZAS (ARGENTINAS & MUNDIALES) ---
+          ("https://cronista.com" finanzas argentina es)
+          ("https://iprofesional.com" finanzas argentina es)
+          ("https://ft.com" finanzas global eng)
+          ("https://bloomberg.com" finanzas global eng)
+
+          ;; --- TECNOLOGÍA & CULTURA HACKER ---
+          ("https://ycombinator.com" tech hacker global eng)
+          ("https://hnrss.org" tech hacker popular eng)
+          ("https://ieee.org" tech ciencia eng)
+
+          ;; --- JOURNALING, MINIMALISMO & PRODUCTIVIDAD ---
+          ("https://zenhabits.net" journaling minimalismo eng)
+          ("https://austinkleon.com" journaling creativity eng)
+
+          ;; --- TEMÁTICA EXTRA: ITALIANO (TECNOLOGÍA Y LINUX) ---
+          ("https://lffl.org" linux tech it)
+          ("https://lealternative.net" tech software_libre it)
+          
+          ;; --- FEEDS COMPLEMENTARIOS ORIGINALES VERIFICADOS ---
+          ("https://orgmode.org" emacs orgmode)
+          ("https://desdelinux.net" linux blog es)
+          ("https://elblogdelazaro.org" linux blog es)
+          ("https://victorhckinthefreeworld.com" linux blog es)
+          ("http://feedburner.com" linux podcast es)
+          ("https://nueva-actitud.org" blog es)
+          ("https://lukesmith.xyz" linux blog)
+          ("https://linuxfoundation.org" linux)
+          ("https://linux.com" linux)
+          ("https://tecmint.com" linux dev)
+          ("https://amitmerchant.com" dev blog)
+          ("https://christoph-rumpel.com" dev php)
+          ("https://dcblog.dev" dev php)
+          ("https://phppot.com" dev php)
+          ("https://tomasvotruba.com" dev php)
+          ("https://stitcher.io" dev php))
+)
+
+  ;; Menú de marcadores guardados (Bookmarks) estructurado
+  (setq elfeed-search-bookmarks
+        '(("Finanzas Argentinas e Internacionales" "+finanzas +unread" ?f)
+          ("Desarrollo de Software y PHP" "+dev +unread" ?d)
+          ("Noticias Críticas de Linux y Arch" "+critical +unread" ?l)
+          ("Todo lo no leído (Default)" "+unread" ?u)
+          ("Todos los artículos (Historial)" "" ?a)))
+
+  ;; Estirar ancho de columna para títulos largos
+  (setq elfeed-search-title-max-width 100))
 
 (use-package elfeed-goodies
   :init
+  ;; 1. Desactivamos que elfeed-goodies intente alterar la cabecera rota
+  (setq elfeed-goodies/alter-header nil)
   (elfeed-goodies/setup)
   :config
-  (setq elfeed-goodies/entry-pane-size 0.5))
+  (setq elfeed-goodies/entry-pane-size 0.5)
+  
+  ;; 2. REPARACIÓN FORZADA: Restauramos la cabecera nativa por defecto de Elfeed
+  (setq elfeed-search-header-function #'elfeed-search-header))
 
-(add-hook 'elfeed-show-mode-hook 'visual-line-mode)
-(evil-define-key 'normal elfeed-show-mode-map
-  (kbd "J") 'elfeed-goodies/split-show-next
-  (kbd "K") 'elfeed-goodies/split-show-prev)
-(evil-define-key 'normal elfeed-search-mode-map
-  (kbd "J") 'elfeed-goodies/split-show-next
-  (kbd "K") 'elfeed-goodies/split-show-prev)
-#+END_SRC
+(add-hook 'elfeed-search-mode-hook #'elfeed-update)
 
-* EMOJIS
-Emojify is an Emacs extension to display emojis. It can display github style emojis like :smile: or plain ascii ones like :).
+;; ATAJO GLOBAL (Estilo nativo de Doom Emacs)
+(map! :leader
+      :desc "Abrir Elfeed"
+      "o R" #'elfeed) 
 
-#+begin_src emacs-lisp
-(use-package emojify
-  :hook (after-init . global-emojify-mode))
+;; Mapeos Evil para navegar rápido con J y K en la interfaz dividida
+(map! :map elfeed-show-mode-map
+      :n "J" #'elfeed-goodies/split-show-next
+      :n "K" #'elfeed-goodies/split-show-prev)
+
+(map! :map elfeed-search-mode-map
+      :n "J" #'elfeed-goodies/split-show-next
+      :n "K" #'elfeed-goodies/split-show-prev)
+
+;; Mapeos rápidos para filtrar por categorías (Bookmarks) con una sola tecla
+(map! :map elfeed-search-mode-map
+      :n "f" (λ! (elfeed-search-set-filter "+finanzas +unread"))   ; Presiona f para Finanzas
+      :n "d" (λ! (elfeed-search-set-filter "+dev +unread"))        ; Presiona d para Programación
+      :n "l" (λ! (elfeed-search-set-filter "+critical +unread"))   ; Presiona l para Avisos Críticos Arch
+      :n "a" (λ! (elfeed-search-set-filter "")))                   ; Presiona a para Historial Completo
+
+;; Asignación de la tecla 'R' (Mayúscula + R) para la captura directa e inteligente
+(map! :map elfeed-show-mode-map   :n "R" #'my/elfeed-to-org-roam)
+(map! :map elfeed-search-mode-map :n "R" #'my/elfeed-to-org-roam)
 #+end_src
-
 * ERC
 ERC is a built-in Emacs IRC client.
 
@@ -608,6 +662,25 @@ ERC is a built-in Emacs IRC client.
 
 #+end_src
 
+#+begin_src emacs-lisp
+(after! elfeed
+  ;; Define tus filtros rápidos personalizados
+  (setq elfeed-search-bookmarks
+        '(("Finanzas Argentinas e Internacionales" "+finanzas +unread" ?f)
+          ("Desarrollo de Software y PHP" "+dev +unread" ?d)
+          ("Noticias Críticas de Linux y Arch" "+critical +unread" ?l)
+          ("Todo lo no leído (Default)" "+unread" ?u)
+          ("Todos los artículos (Historial)" "" ?a)))
+
+  ;; Atajos rápidos para activar los bookmarks con un solo botón en elfeed-search
+  (map! :map elfeed-search-mode-map
+        :n "f" (λ! (elfeed-search-set-filter "+finanzas +unread"))
+        :n "d" (λ! (elfeed-search-set-filter "+dev +unread"))
+        :n "l" (λ! (elfeed-search-set-filter "+critical +unread"))
+        :n "a" (λ! (elfeed-search-set-filter ""))))
+#+end_src
+
+
 * EVALUATE ELISP EXPRESSIONS
 Changing some keybindings from their defaults to better fit with Doom Emacs, and to avoid conflicts with my window managers which sometimes use the control key in their keybindings.  By default, Doom Emacs does not use 'SPC e' for anything, so I choose to use the format 'SPC e' plus 'key' for these (I also use 'SPC e' for 'eww' keybindings).
 
@@ -627,12 +700,12 @@ Changing some keybindings from their defaults to better fit with Doom Emacs, and
        :desc "Evaluate elisp expression" "e" #'eval-expression
        :desc "Evaluate last sexpression" "l" #'eval-last-sexp
        :desc "Evaluate elisp in region" "r" #'eval-region))
-#+END_SRC
+#+end_src
 
 * EWW
 EWW is the Emacs Web Wowser, the builtin browser in Emacs.  Below I set urls to open in a specific browser (eww) with browse-url-browser-function.  By default, Doom Emacs does not use 'SPC e' for anything, so I choose to use the format 'SPC e' plus 'key' for these (I also use 'SPC e' for 'eval' keybindings).  I chose to use 'SPC s w' for eww-search-words because Doom Emacs uses 'SPC s' for 'search' commands.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "firefox")
       ;;browse-url-generic-program "brave-browser.desktop")
@@ -643,7 +716,7 @@ EWW is the Emacs Web Wowser, the builtin browser in Emacs.  Below I set urls to 
       (:prefix ("e" . "evaluate/ERC/EWW")
        :desc "Eww web browser" "w" #'eww
        :desc "Eww reload page" "R" #'eww-reload))
-#+END_SRC
+#+end_src
 
 * FONTS
 Settings related to fonts within Doom Emacs:
@@ -653,7 +726,7 @@ Settings related to fonts within Doom Emacs:
 + 'font-lock-comment-face' -- for comments.
 + 'font-lock-keyword-face' -- for keywords with special significance like 'setq' in elisp.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq doom-font (font-spec :family "JetBrains Mono" :size 15)
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 15)
       doom-big-font (font-spec :family "JetBrains Mono" :size 20))
@@ -663,7 +736,7 @@ Settings related to fonts within Doom Emacs:
 (custom-set-faces!
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
-#+END_SRC
+#+end_src
 
 * INSERT DATE
 Some custom functions to insert the date.  The function 'insert-todays-date' can be used one of three different ways: (1) just the keybinding without the universal argument prefix, (2) with one universal argument prefix, or (3) with two universal argument prefixes.  The universal argument prefix is 'SPC-u' in Doom Emacs (C-u in standard GNU Emacs).  The function 'insert-any-date' only outputs to one format, which is the same format as 'insert-todays-date' without a prefix.
@@ -714,7 +787,7 @@ Available functions (positions) for 'ivy-posframe-display-functions-alist'
 
 =NOTE:= If the setting for 'ivy-posframe-display' is set to 'nil' (false), anything that is set to 'ivy-display-function-fallback' will just default to their normal position in Doom Emacs (usually a bottom split).  However, if this is set to 't' (true), then the fallback position will be centered in the window.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq ivy-posframe-display-functions-alist
       '((swiper                     . ivy-posframe-display-at-point)
         (complete-symbol            . ivy-posframe-display-at-point)
@@ -732,17 +805,17 @@ Available functions (positions) for 'ivy-posframe-display-functions-alist'
         (dmenu . 20)
         (t . 10)))
 (ivy-posframe-mode 1) ; 1 enables posframe-mode, 0 disables it.
-#+END_SRC
+#+end_src
 
 ** IVY KEYBINDINGS
 By default, Doom Emacs does not use 'SPC v', so the format I use for these bindings is 'SPC v' plus 'key'.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (map! :leader
       (:prefix ("v" . "Ivy")
        :desc "Ivy push view" "v p" #'ivy-push-view
        :desc "Ivy switch view" "v s" #'ivy-switch-view))
-#+END_SRC
+#+end_src
 
 * LINE SETTINGS
 I set comment-line to 'SPC TAB TAB' which is a rather comfortable keybinding for me on my ZSA Moonlander keyboard.  The standard Emacs keybinding for comment-line is 'C-x C-;'.  The other keybindings are for commands that toggle on/off various line-related settings.  Doom Emacs uses 'SPC t' for "toggle" commands, so I choose 'SPC t' plus 'key' for those bindings.
@@ -755,7 +828,7 @@ I set comment-line to 'SPC TAB TAB' which is a rather comfortable keybinding for
 | doom/toggle-line-numbers | /Toggle line numbers/                       | SPC t l     |
 | toggle-truncate-lines    | /Toggle truncate lines/                     | SPC t t     |
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq display-line-numbers-type 'relative) ;;or t
 (map! :leader
       :desc "Comment or uncomment lines" "TAB TAB" #'comment-line
@@ -764,10 +837,10 @@ I set comment-line to 'SPC TAB TAB' which is a rather comfortable keybinding for
        :desc "Toggle line highlight in frame" "h" #'hl-line-mode
        :desc "Toggle line highlight globally" "H" #'global-hl-line-mode
        :desc "Toggle truncate lines" "t" #'toggle-truncate-lines))
-#+END_SRC
+#+end_src
 
 * MAGIT
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 ;;; tools/lsp/+lsp.el -*- lexical-binding: t; -*-
 
 (defvar +lsp-company-backends
@@ -988,7 +1061,7 @@ instead is more sensible."
   :when (featurep! :completion vertico)
   :init
   (map! :map lsp-mode-map [remap xref-find-apropos] #'consult-lsp-symbols))
-#+END_SRC
+#+end_src
 
 ** MU4E
 
@@ -1087,16 +1160,24 @@ Neotree is a file tree viewer.  When you open neotree, it jumps to the current f
 | neotree-toggle | /Toggle neotree/            | SPC t n    |
 | neotree- dir   | /Open directory in neotree/ | SPC d n    |
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (after! neotree
   (setq neo-smart-open t
         neo-window-fixed-size nil))
+
 (after! doom-themes
-  (setq doom-neotree-enable-variable-pitch t))
+  (setq doom-neotree-enable-variable-pitch t)
+  (doom-themes-neotree-config)) ; <- Esta línea activa los iconos de doom-themes en neotree
+
 (map! :leader
       :desc "Toggle neotree file viewer" "t n" #'neotree-toggle
       :desc "Open directory in neotree" "d n" #'neotree-dir)
-#+END_SRC
+#+end_src
+
+(after! neotree
+  (setq neo-theme 'icons))
+
+
 * MARKDOWN
 
 #+begin_src emacs-lisp
@@ -1142,7 +1223,7 @@ Adding mouse support in the terminal version of Emacs.
 #+end_src
 
 * LSP-COMPANY-BACKENDS
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 
 (defvar +lsp-company-backends
   (if (featurep! :editor snippets)
@@ -1361,26 +1442,7 @@ instead is more sensible."
   :when (featurep! :completion vertico)
   :init
   (map! :map lsp-mode-map [remap xref-find-apropos] #'consult-lsp-symbols))
-#+END_SRC
-
-* NEOTREE
-Neotree is a file tree viewer.  When you open neotree, it jumps to the current file thanks to neo-smart-open.  The neo-window-fixed-size setting makes the neotree width be adjustable.  Doom Emacs had no keybindings set for neotree.  Since Doom Emacs uses 'SPC t' for 'toggle' keybindings, I used 'SPC t n' for toggle-neotree.
-
-| COMMAND        | DESCRIPTION               | KEYBINDING |
-|----------------+---------------------------+------------|
-| neotree-toggle | /Toggle neotree/            | SPC t n    |
-| neotree- dir   | /Open directory in neotree/ | SPC d n    |
-
-#+BEGIN_SRC emacs-lisp
-(after! neotree
-  (setq neo-smart-open t
-        neo-window-fixed-size nil))
-(after! doom-themes
-  (setq doom-neotree-enable-variable-pitch t))
-(map! :leader
-      :desc "Toggle neotree file viewer" "t n" #'neotree-toggle
-      :desc "Open directory in neotree" "d n" #'neotree-dir)
-#+END_SRC
+#+end_src
 
 * OPEN SPECIFIC FILES
 Keybindings to open files that I work with all the time using the find-file command, which is the interactive file search that opens with 'C-x C-f' in GNU Emacs or 'SPC f f' in Doom Emacs.  These keybindings use find-file non-interactively since we specify exactly what file to open.  The format I use for these bindings is 'SPC =' plus 'key' since Doom Emacs does not use 'SPC ='.
@@ -1394,7 +1456,7 @@ Keybindings to open files that I work with all the time using the find-file comm
 | ~/.config/doom/eshell/aliases"                                     | /Edit eshell aliases/   | SPC = e a  |
 | ~/.config/doom/eshell/profile"                                     | /Edit eshell profile/   | SPC = e p  |
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (map! :leader
       (:prefix ("=" . "open file")
        :desc "Edit agenda file" "a" #'(lambda () (interactive) (find-file "~/Dropbox/Org/Agenda/agenda.org"))
@@ -1405,14 +1467,14 @@ Keybindings to open files that I work with all the time using the find-file comm
       (:prefix ("= e" . "open eshell files")
        :desc "Edit eshell aliases" "a" #'(lambda () (interactive) (find-file "~/.config/doom/eshell/aliases"))
        :desc "Edit eshell profile" "p" #'(lambda () (interactive) (find-file "~/.config/doom/eshell/profile"))))
-#+END_SRC
+#+end_src
 
 * ORG MODE
 I wrapped most of this block in (after! org).  Without this, my settings might be evaluated too early, which will result in my settings being overwritten by Doom's defaults.  I have also enabled org-journal, org-superstar and org-roam by adding (+journal +pretty +roam2) to the org section of my Doom Emacs init.el.
 
 =NOTE:= I have the location of my Org directory and Roam directory in $HOME/nc/ which is a Nextcloud folder that allows me to instantly sync all of my Org work between my home computer and my office computer.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
 (after! org
@@ -1441,7 +1503,7 @@ I wrapped most of this block in (after! org).  Without this, my settings might b
              "WAIT(w)"           ; Something is holding up this task
              "|"                 ; The pipe necessary to separate "active" states and "inactive" states
              "DONE(d)"           ; Task has been completed
-             "CANCELLED(c)" )))) ; Task has been cancelled
+             "CANCELLED(c)" ))) ; Task has been cancelled
 
         ;; etiquetas que utilizo para mis notas
         (setq org-tag-alist '(
@@ -1463,9 +1525,9 @@ I wrapped most of this block in (after! org).  Without this, my settings might b
             ("@web" .?w)
             ("@mail" .?m)
             ("@desarrollo" . ?d)
-            ))
+            )))
 
-#+END_SRC
+#+end_src
 
 * ORG-MODERN
 
@@ -1517,7 +1579,7 @@ I wrapped most of this block in (after! org).  Without this, my settings might b
 #+end_src
 
 * ORG CAPTURE
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 ;; (require 'mu4e-org)
 ;; (require 'org-mu4e)
 (use-package org-capture
@@ -1771,20 +1833,20 @@ Capturado %<%Y-%m-%d %H:%M>" "Plantilla básica de tareas.")
 (global-set-key (kbd "C-c r r") 'my/org-recipes-search-by-rating)
 (global-set-key (kbd "C-c r d") 'my/org-recipes-search-dietary-restrictions)
 (global-set-key (kbd "C-c r u") 'my/org-recipes-update-preparation-count)
-      #+END_SRC
+      #+end_src
 
         #+RESULTS:
         : org-capture
 
 * ORG-BOOKS
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (require 'org-books)
 
 ;; Set path to the reading list org file
 (setq org-books-file "~/Dropbox/Org/libros.org")
 
-#+END_SRC
+#+end_src
 
 #+RESULTS:
 | b | Book | entry | (file some-file.org) | %(let* ((url (substring-no-properties (current-kill 0))) |
@@ -1852,7 +1914,7 @@ Capturado %<%Y-%m-%d %H:%M>" "Plantilla básica de tareas.")
 
 * NOTIFICATIONS
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
  (require 'appt)
  (appt-activate 1)
 
@@ -1872,7 +1934,7 @@ Capturado %<%Y-%m-%d %H:%M>" "Plantilla básica de tareas.")
 (run-at-time "24:01" 3600 'org-agenda-to-appt)           ;; update appt list hourly
 (setq org-agenda-finalize-hook 'org-agenda-to-appt)
 
-#+END_SRC
+#+end_src
 
 #+RESULTS:
 : org-agenda-to-appt
@@ -2050,14 +2112,14 @@ We need ox-man for "Org eXporting" to manpage format.
 
 =NOTE:= I also enable ox-publish for converting an Org site into an HTML site, but that is done in init.el (org +publish).
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package ox-man)
 (use-package ox-hugo
 ;;  :ensure t   ;Auto-install the package from Melpa
 ;;  :pin melpa
 ;;  :after ox
   )
-#+END_SRC
+#+end_src
 
 * Org-journal
 #+begin_src emacs-lisp
@@ -2115,8 +2177,8 @@ See `org-capture-templates' for more information."
 #+end_src
 
 #+RESULTS:
-| distro.tube | :base-directory | ~/nc/gitlab-repos/distro.tube/                         | :base-extension | org  | :publishing-directory | ~/nc/gitlab-repos/distro.tube/html/ | :recursive | t    | :exclude | org-html-themes/.* | :publishing-function | org-html-publish-to-html | :headline-levels      |                                                                  4 | :auto-preamble | t |          |                       |                      |                        |
-| org-static  | :base-directory | ~/Dropbox/Org/website/ | :base-extension | css\ | js\                   | png\                                | jpg\       | gif\ | pdf\     | mp3\               | ogg\                 | swf                      | :publishing-directory | ~/Dropbox/Org/website/public_html/ | :recursive     | t | :exclude | .*/org-html-themes/.* | :publishing-function | org-publish-attachment |
+| distro.tube | :base-directory | ~/nc/gitlab-repos/distro.tube/ | :base-extension | org  | :publishing-directory | ~/nc/gitlab-repos/distro.tube/html/ | :recursive | t    | :exclude | org-html-themes/.* | :publishing-function | org-html-publish-to-html | :headline-levels      |                                  4 | :auto-preamble | t |          |                       |                      |                        |
+| org-static  | :base-directory | ~/Dropbox/Org/website/         | :base-extension | css\ | js\                   | png\                                | jpg\       | gif\ | pdf\     | mp3\               | ogg\                 | swf                      | :publishing-directory | ~/Dropbox/Org/website/public_html/ | :recursive     | t | :exclude | .*/org-html-themes/.* | :publishing-function | org-publish-attachment |
 
 * Org-roam
 #+begin_src emacs-lisp
@@ -2136,6 +2198,12 @@ See `org-capture-templates' for more information."
       "* Language: %?\n\n* Reference:\n\n"
       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n#+filetags: ")
       :unnarrowed t)
+     ;; Plantilla RSS integrada
+     ("r" "rss reference" plain
+      "* Detalles del Artículo\n- **Autor:** %:elfeed-author\n- **Medio:** %:elfeed-feed-title\n- **Fecha Original:** %:elfeed-date\n- **Enlace:** %:elfeed-link\n\n* Notas y Apuntes\n%?"
+      :if-new (file+head "%<%Y%m%d%H%M%S>-rss-${slug}.org" 
+                         "#+title: ${title}\n#+date: %U\n#+filetags: :rss:reference:\n#+Reference: %:elfeed-link\n")
+      :unnarrowed t)
      ("b" "book notes" plain
       "* Book Information
 Author: %^{Author}
@@ -2153,7 +2221,7 @@ Status: %^{Status|Reading|Completed|To Read}
      ("B" "book simple" plain
            "* Book Details\n- Author: %^{Author}\n- Year: %^{Year}\n- Status: %^{Status|Reading|Completed|To Read}\n- Rating: %^{Rating}/5\n* Summary\n%^{Brief summary}\n* Key Takeaways\n%?\n* Notes"
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                              "#+title: ${title}\n#+date: %U\n#+filetags: book\n#+EXPORT_FILE_NAME: \n#+Reference: %a\n") ;; %a inserta automáticamente el link almacenado (ej: mu4e:msgid)
+                              "#+title: ${title}\n#+date: %U\n#+filetags: book\n#+EXPORT_FILE_NAME: \n#+Reference: %a\n")
            :unnarrowed t)
      ("c" "chapter notes" plain
       "* Chapter: %^{Chapter Number/Name}
@@ -2205,9 +2273,64 @@ Pages: %^{Pages}
 (add-hook 'text-mode-hook
           '(lambda () (flyspell-mode 1)))
 #+end_src
+#+begin_src emacs-lisp
+;; =============================================================================
+;; CAPTURA DE ELFEED A ORG-ROAM DEFINITIVA (100% DIRECTA SIN MINIBUFFER)
+;; =============================================================================
+
+(defun my/elfeed-to-org-roam ()
+  "Captura el artículo de Elfeed y crea la nota en Org-roam directamente sin prompts de Vertico."
+  (interactive)
+  (let* ((entry (if (eq major-mode 'elfeed-show-mode)
+                    elfeed-show-entry
+                  (elfeed-search-selected :single)))
+         (title (elfeed-entry-title entry))
+         (link (elfeed-entry-link entry))
+         (author (or (elfeed-meta entry :author) "Desconocido"))
+         (feed-title (elfeed-feed-title (elfeed-entry-feed entry)))
+         (date (format-time-string "%Y-%m-%d %H:%M" (seconds-to-time (elfeed-entry-date entry))))
+         ;; Generamos el ID único (UUID) obligatorio que usa Org-roam para indexar nodos
+         (org-id (org-id-new))
+         ;; SOLUCIÓN: Limpieza de caracteres nativa estándar para crear un slug seguro sin dependencias
+         (clean-slug (let ((string (downcase title)))
+                       (setq string (replace-regexp-in-string "[^a-z0-9 ]" "" string))
+                       (subst-char-in-string ?\s ?_ string)))
+         (file-name (format "%s-rss-%s.org" (format-time-string "%Y%m%d%H%M%S") clean-slug))
+         (file-path (expand-file-name file-name org-roam-directory)))
+    
+    ;; Creación e inyección directa del contenido en el archivo sin pasar por plantillas interactivas
+    (with-temp-file file-path
+      (insert (concat "#+title: " title "\n"
+                      "#+date: " (format-time-string "[%Y-%m-%d %a %H:%M]") "\n"
+                      "#+filetags: :rss:reference:\n"
+                      "#+Reference: " link "\n"
+                      ":PROPERTIES:\n"
+                      ":ID:       " org-id "\n"
+                      ":END:\n\n"
+                      "* Detalles del Artículo\n"
+                      "- **Autor:** " author "\n"
+                      "- **Medio:** " feed-title "\n"
+                      "- **Fecha Original:** " date "\n"
+                      "- **Enlace:** " link "\n\n"
+                      "* Notas y Apuntes\n")))
+    
+    ;; Abrimos el archivo creado en la pantalla y actualizamos la base de datos de Org-roam en segundo plano
+    (find-file file-path)
+    (org-roam-db-update-file file-path)
+    (goto-char (point-max))
+    ;; AUTOMATIZACIÓN: Quitamos la etiqueta 'unread' del artículo en Elfeed
+    (elfeed-untag entry 'unread)
+    (elfeed-search-update-entry entry) ; Refresca la interfaz visual
+    
+    (message "Nota de referencia creada y artículo marcado como leído: %s" file-name)))
+;; Asignación nativa de la tecla 'R' (Mayúscula + R) dentro de Elfeed
+(map! :map elfeed-show-mode-map   :n "R" #'my/elfeed-to-org-roam)
+(map! :map elfeed-search-mode-map :n "R" #'my/elfeed-to-org-roam)
+#+end_src
 
 #+RESULTS:
-| er/add-text-mode-expansions | +spell-remove-run-together-switch-for-aspell-h | (lambda nil (flyspell-mode 1)) | turn-on-auto-fill | +indent-guides-init-maybe-h | visual-line-mode | display-line-numbers-mode | vi-tilde-fringe-mode | text-mode-hook-identify |
+| (lambda nil (flyspell-mode 1)) | turn-on-auto-fill | +spell-remove-run-together-switch-for-aspell-h | er/add-text-mode-expansions | visual-line-mode | display-line-numbers-mode | vi-tilde-fringe-mode | text-mode-hook-identify |
+
 
 * ORG-ROAM-UI
 
@@ -2229,6 +2352,9 @@ Pages: %^{Pages}
           org-roam-ui-open-on-start t))
 
 #+end_src
+
+#+RESULTS:
+: t
 
 * ORG-REF
 
@@ -2358,7 +2484,7 @@ Emacs registers are compartments where you can save text, rectangles and positio
 | increment-register               | /Increment register/               | SPC r +    |
 | point-to-register                | /Point to register/                | SPC r SPC  |
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (map! :leader
       (:prefix ("r" . "registers")
        :desc "Copy to register" "c" #'copy-to-register
@@ -2372,14 +2498,14 @@ Emacs registers are compartments where you can save text, rectangles and positio
        :desc "Window configuration to register" "w" #'window-configuration-to-register
        :desc "Increment register" "+" #'increment-register
        :desc "Point to register" "SPC" #'point-to-register))
-#+END_SRC
+#+end_src
 
 * SHELLS
 Settings for the various shells and terminal emulators within Emacs.
 + 'shell-file-name' -- sets the shell to be used in M-x shell, M-x term, M-x ansi-term and M-x vterm.
 + 'eshell-aliases-file' -- sets an aliases file for the eshell.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq shell-file-name "/bin/zsh"
       vterm-max-scrollback 5000)
 (setq eshell-rc-script "~/.config/doom/eshell/profile"
@@ -2395,7 +2521,7 @@ Settings for the various shells and terminal emulators within Emacs.
       :desc "Eshell popup toggle" "e t" #'+eshell/toggle
       :desc "Counsel eshell history" "e h" #'counsel-esh-history
       :desc "Vterm popup toggle" "v t" #'+vterm/toggle)
-#+END_SRC
+#+end_src
 
 * SPELL-FU
 #+begin_src emacs-lisp
@@ -2448,29 +2574,29 @@ Settings for the various shells and terminal emulators within Emacs.
 * SPLITS
 I set splits to default to opening on the right using 'prefer-horizontal-split'.  I set a keybinding for 'clone-indirect-buffer-other-window' for when I want to have the same document in two splits.  The text of the indirect buffer is always identical to the text of its base buffer; changes made by editing either one are visible immediately in the other.  But in all other respects, the indirect buffer and its base buffer are completely separate.  For example, I can fold one split but other will be unfolded.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun prefer-horizontal-split ()
   (set-variable 'split-height-threshold nil t)
   (set-variable 'split-width-threshold 40 t)) ; make this as low as needed
 (add-hook 'markdown-mode-hook 'prefer-horizontal-split)
 (map! :leader
       :desc "Clone indirect buffer other window" "b c" #'clone-indirect-buffer-other-window)
-#+END_SRC
+#+end_src
 
 * WINNER MODE
 Winner mode has been included with GNU Emacs since version 20.  This is a global minor mode and, when activated, it allows you to “undo” (and “redo”) changes in the window configuration with the key commands 'SCP w <left>' and 'SPC w <right>'.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (map! :leader
       (:prefix ("w" . "window")
        :desc "Winner redo" "<right>" #'winner-redo
        :desc "Winner undo" "<left>" #'winner-undo))
-#+END_SRC
+#+end_src
 
 * WRITEROOM MODE
 Writeroom mode is a minor mode for Emacs that implements a distraction-free writing mode.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package! writeroom-mode)
 (with-eval-after-load 'writeroom-mode
   (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
@@ -2489,7 +2615,7 @@ Writeroom mode is a minor mode for Emacs that implements a distraction-free writ
       (:prefix ("d" . "doom-big-font-mode")
         :desc "enable doom-big-font-mode" "f" #'doom-big-font-mode)))
 
-#+END_SRC
+#+end_src
 
 #+RESULTS:
 : winner-undo
@@ -2512,11 +2638,11 @@ Emacs provides a 'zap-to-char' command that kills from the current point to a ch
 
 =NOTE=:  Vim (evil mode) has similar functionality builtin.  You can delete to the next occurrence of 'e' by using 'dte' in normal.  To delete to the next occurrence of 'e' including the 'e', then you would use 'dfe'.  And you can modify 'dt' and 'df' by prefixing them with numbers, so '2dte' would delete to the second occurrence of 'e'.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (map! :leader
       :desc "Zap to char" "z" #'zap-to-char
       :desc "Zap up to char" "Z" #'zap-up-to-char)
-#+END_SRC
+#+end_src
 
 * PYTHON
 
@@ -3062,3 +3188,6 @@ COMANDOS DENTRO DE UN NOTEBOOK ABIERTO:
   C-c C-t   → insertar celda nueva
   C-x C-s   → guardar el notebook (.ipynb, compatible con Jupyter normal)
 #+end_comment
+
+(after! elfeed
+  (setq elfeed-search-title-max-width 100)) ; Ajusta el número (100) según el ancho de tu monitor

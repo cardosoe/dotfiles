@@ -40,6 +40,7 @@
        ;;minimap           ; show a map of the code on the side
        modeline          ; snazzy, Atom-inspired modeline, plus API
        ;;nav-flash         ; blink cursor line after big motions
+       icons
        neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
        (popup +default)   ; tame sudden yet inevitable temporary windows
@@ -187,7 +188,7 @@
        emms
        everywhere        ; *leave* Emacs!? You must be joking
        irc               ; how neckbeards socialize
-       (rss +org)        ; emacs as an RSS reader
+       (rss)        ; emacs as an RSS reader
 
        :config
        literate
