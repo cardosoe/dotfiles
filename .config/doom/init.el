@@ -31,7 +31,8 @@
        :ui
        ;;deft              ; notational velocity for Emacs
        doom              ; what makes DOOM look the way it does
-       doom-dashboard    ; a nifty splash screen for Emacs
+       ;;doom-dashboard    ; a nifty splash screen for Emacs
+       dashboard
        ;;doom-quit         ; DOOM quit-message prompts when you quit Emacs
        (emoji +unicode)  ; 🙂
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
@@ -188,8 +189,10 @@
        emms
        everywhere        ; *leave* Emacs!? You must be joking
        irc               ; how neckbeards socialize
-       (rss)        ; emacs as an RSS reader
+       ;;rss        ; emacs as an RSS reader
 
        :config
        literate
-       (default +bindings +smartparens))
+       (default +bindings +smartparens)
+       ;; Limitar compilación nativa a 1 hilo para evitar saturar la RAM
+(setq native-comp-async-jobs-number 1))

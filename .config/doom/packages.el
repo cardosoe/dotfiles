@@ -68,7 +68,7 @@
 (package! dired-open)
 (package! dired-subtree)
 (package! dmenu)
-(package! elfeed-goodies)
+(package! elfeed)
 (package! emojify)
 (package! esxml)
 (package! evil-tutor)
@@ -138,6 +138,7 @@
 (package! org-msg)
 ;;; Recetas personalizadas para el ecosistema de Nicolas Rougier
 (package! nano-mu4e :recipe (:host github :repo "rougier/nano-mu4e"))
+(package! mu4e-dashboard :recipe (:host github :repo "rougier/mu4e-dashboard"))
 (package! lsp-ui)
 (package! dotenv-mode)
 (package! reformatter)   ; solo si activás el bloque opcional de php-cs-fixer

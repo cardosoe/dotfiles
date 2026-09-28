@@ -7,6 +7,10 @@
 
 * TABLE OF CONTENTS :toc:
 - [[#about-this-config][ABOUT THIS CONFIG]]
+  - [[#early-init-fixes][Early Init Fixes]]
+- [[#core--system-configuration][Core / System Configuration]]
+  - [[#native-compilation-fix][Native Compilation Fix]]
+- [[#lexical-binding--general-settings][Lexical Binding / General Settings]]
 - [[#beacon][BEACON]]
 - [[#bookmarks-and-buffers][BOOKMARKS AND BUFFERS]]
   - [[#bookmarks][Bookmarks]]
@@ -112,6 +116,22 @@
 
 * ABOUT THIS CONFIG
 This is my personal Doom Emacs config.  Doom Emacs is a distribution of Emacs that uses the "evil" keybindings (Vim keybindings) and includes a number of nice extensions and a bit of configuration out of the box.  I am maintaining this config not just for myself, but also for those that want to explore some of what is possible with Emacs.  I will add a lot of examples of plugins and settings, some of them I may not even use personally.  I do this because many people following me on YouTube look at my configs as "documentation".
+
+** Early Init Fixes
+#+begin_src elisp :tangle early-init.el
+(setq native-comp-jit-compilation nil)
+#+end_src
+
+* Core / System Configuration
+
+** Native Compilation Fix
+#+begin_src elisp
+(setq native-comp-speed -1
+      comp-deferred-compilation nil)
+#+end_src
+
+* Lexical Binding / General Settings
+... el resto de tu configuración ...
 
 ;; Declaramos las variables como nulas al inicio para que Emacs no tire error al leer el archivo
 (defvar mu4e-headers-actions nil)
@@ -535,55 +555,40 @@ An RSS newsfeed reader for Emacs.
   (setq elfeed-search-feed-face '(:foreground "#ffffff" :weight bold))  
   
   ;; Lista unificada de feeds RSS corregida y con paréntesis balanceados
-  (setq elfeed-feeds
-        '(;; --- EMACS, ORG-MODE & ORG-ROAM ---
-          ("https://emacslife.com" emacs planet eng)
-          ("https://sachachua.com" emacs tech eng)
-          ("https://karthinks.com" emacs dev eng)
-          ("https://protesilaos.com" emacs linux philosophy eng)
-          
-          ;; --- LINUX & ARCHLINUX ---
-          ("https://archlinux.org" arch linux critical)
-          ("https://itsfoss.com" linux tech eng)
-          ("https://phoronix.com" linux hardware benchmarks eng)
-          ("https://gamingonlinux.com" linux gaming eng)
+(setq elfeed-feeds
+      '(;; --- EMACS, ORG-MODE & ORG-ROAM ---
+        ("https://emacslife.com/feed.xml" emacs planet eng)
+        ("https://sachachua.com/blog/feed/" emacs tech eng)
+        ("https://karthinks.com/index.xml" emacs dev eng)
+        ("https://protesilaos.com/master.xml" emacs linux philosophy eng)
+        ("https://orgmode.org/changes.rss" emacs orgmode)
 
-          ;; --- FINANZAS (ARGENTINAS & MUNDIALES) ---
-          ("https://cronista.com" finanzas argentina es)
-          ("https://iprofesional.com" finanzas argentina es)
-          ("https://ft.com" finanzas global eng)
-          ("https://bloomberg.com" finanzas global eng)
+        ;; --- LINUX & ARCHLINUX ---
+        ("https://archlinux.org/feeds/news/" arch linux critical)
+        ("https://itsfoss.com/feed/" linux tech eng)
+        ("https://www.phoronix.com/rss.php" linux hardware benchmarks eng)
+        ("https://www.gamingonlinux.com/article_rss.php" linux gaming eng)
+        ("https://blog.desdelinux.net/feed/" linux blog es)
+        ("https://elblogdelazaro.org/feed/" linux blog es)
+        ("https://victorhckinthefreeworld.com/feed/" linux blog es)
+        ("https://lukesmith.xyz/rss.xml" linux blog)
+        ("https://www.tecmint.com/feed/" linux dev)
+        ("https://www.lffl.org/feeds/posts/default" linux tech it)
 
-          ;; --- TECNOLOGÍA & CULTURA HACKER ---
-          ("https://ycombinator.com" tech hacker global eng)
-          ("https://hnrss.org" tech hacker popular eng)
-          ("https://ieee.org" tech ciencia eng)
+        ;; --- TECNOLOGÍA & CULTURA HACKER ---
+        ("https://hnrss.org/frontpage" tech hacker popular eng)
+        ("https://www.lealternative.net/feed/" tech software_libre it)
 
-          ;; --- JOURNALING, MINIMALISMO & PRODUCTIVIDAD ---
-          ("https://zenhabits.net" journaling minimalismo eng)
-          ("https://austinkleon.com" journaling creativity eng)
+        ;; --- JOURNALING, MINIMALISMO & PRODUCTIVIDAD ---
+        ("https://zenhabits.net/feed/" journaling minimalismo eng)
+        ("https://austinkleon.com/feed/" journaling creativity eng)
 
-          ;; --- TEMÁTICA EXTRA: ITALIANO (TECNOLOGÍA Y LINUX) ---
-          ("https://lffl.org" linux tech it)
-          ("https://lealternative.net" tech software_libre it)
-          
-          ;; --- FEEDS COMPLEMENTARIOS ORIGINALES VERIFICADOS ---
-          ("https://orgmode.org" emacs orgmode)
-          ("https://desdelinux.net" linux blog es)
-          ("https://elblogdelazaro.org" linux blog es)
-          ("https://victorhckinthefreeworld.com" linux blog es)
-          ("http://feedburner.com" linux podcast es)
-          ("https://nueva-actitud.org" blog es)
-          ("https://lukesmith.xyz" linux blog)
-          ("https://linuxfoundation.org" linux)
-          ("https://linux.com" linux)
-          ("https://tecmint.com" linux dev)
-          ("https://amitmerchant.com" dev blog)
-          ("https://christoph-rumpel.com" dev php)
-          ("https://dcblog.dev" dev php)
-          ("https://phppot.com" dev php)
-          ("https://tomasvotruba.com" dev php)
-          ("https://stitcher.io" dev php))
+        ;; --- DEV / PHP ---
+        ("https://www.amitmerchant.com/feed.xml" dev blog)
+        ("https://christoph-rumpel.com/feed" dev php)
+        ("https://www.dcblog.dev/feed" dev php)
+        ("https://phppot.com/feed/" dev php)
+        ("https://stitcher.io/rss" dev php))
 )
 
   ;; Menú de marcadores guardados (Bookmarks) estructurado
@@ -597,32 +602,11 @@ An RSS newsfeed reader for Emacs.
   ;; Estirar ancho de columna para títulos largos
   (setq elfeed-search-title-max-width 100))
 
-(use-package elfeed-goodies
-  :init
-  ;; 1. Desactivamos que elfeed-goodies intente alterar la cabecera rota
-  (setq elfeed-goodies/alter-header nil)
-  (elfeed-goodies/setup)
-  :config
-  (setq elfeed-goodies/entry-pane-size 0.5)
-  
-  ;; 2. REPARACIÓN FORZADA: Restauramos la cabecera nativa por defecto de Elfeed
-  (setq elfeed-search-header-function #'elfeed-search-header))
-
-(add-hook 'elfeed-search-mode-hook #'elfeed-update)
-
 ;; ATAJO GLOBAL (Estilo nativo de Doom Emacs)
 (map! :leader
       :desc "Abrir Elfeed"
       "o R" #'elfeed) 
 
-;; Mapeos Evil para navegar rápido con J y K en la interfaz dividida
-(map! :map elfeed-show-mode-map
-      :n "J" #'elfeed-goodies/split-show-next
-      :n "K" #'elfeed-goodies/split-show-prev)
-
-(map! :map elfeed-search-mode-map
-      :n "J" #'elfeed-goodies/split-show-next
-      :n "K" #'elfeed-goodies/split-show-prev)
 
 ;; Mapeos rápidos para filtrar por categorías (Bookmarks) con una sola tecla
 (map! :map elfeed-search-mode-map
@@ -644,9 +628,16 @@ ERC is a built-in Emacs IRC client.
 
 #+begin_src emacs-lisp
 (map! :leader
-      (:prefix ("e". "evaluate/ERC/EWW")
-       :desc "Launch ERC with TLS connection" "E" #'erc-tls))
-
+      :desc "Launch ERC with TLS connection" "e E" #'erc-tls
+      :desc "Evaluate elisp in buffer" "e b" #'eval-buffer
+      :desc "Evaluate defun" "e d" #'eval-defun
+      :desc "Evaluate elisp expression" "e e" #'eval-expression
+      :desc "Evaluate last sexpression" "e l" #'eval-last-sexp
+      :desc "Evaluate elisp in region" "e r" #'eval-region
+      :desc "Eww web browser" "e w" #'eww
+      :desc "Eww reload page" "e R" #'eww-reload
+      :desc "Search web for text between BEG/END" "s w" #'eww-search-words)
+ 
 (setq erc-prompt (lambda () (concat "[" (buffer-name) "]"))
       erc-server "irc.libera.chat"
       erc-nick "cardosoe"
@@ -693,13 +684,13 @@ Changing some keybindings from their defaults to better fit with Doom Emacs, and
 | eval-region     | /Evaluate elisp in region/                     | SPC e r    |
 
 #+Begin_src emacs-lisp
-(map! :leader
-      (:prefix ("e". "evaluate/ERC/EWW")
-       :desc "Evaluate elisp in buffer" "b" #'eval-buffer
-       :desc "Evaluate defun" "d" #'eval-defun
-       :desc "Evaluate elisp expression" "e" #'eval-expression
-       :desc "Evaluate last sexpression" "l" #'eval-last-sexp
-       :desc "Evaluate elisp in region" "r" #'eval-region))
+;; (map! :leader
+;;       (:prefix ("e". "evaluate/ERC/EWW")
+;;        :desc "Evaluate elisp in buffer" "b" #'eval-buffer
+;;        :desc "Evaluate defun" "d" #'eval-defun
+;;        :desc "Evaluate elisp expression" "e" #'eval-expression
+;;        :desc "Evaluate last sexpression" "l" #'eval-last-sexp
+;;        :desc "Evaluate elisp in region" "r" #'eval-region))
 #+end_src
 
 * EWW
@@ -710,12 +701,12 @@ EWW is the Emacs Web Wowser, the builtin browser in Emacs.  Below I set urls to 
       browse-url-generic-program "firefox")
       ;;browse-url-generic-program "brave-browser.desktop")
 ;; (setq browse-url-browser-function 'eww-browse-url) ;
-(map! :leader
-      :desc "Search web for text between BEG/END"
-      "s w" #'eww-search-words
-      (:prefix ("e" . "evaluate/ERC/EWW")
-       :desc "Eww web browser" "w" #'eww
-       :desc "Eww reload page" "R" #'eww-reload))
+;; (map! :leader
+;;       :desc "Search web for text between BEG/END"
+;;       "s w" #'eww-search-words
+;;       (:prefix ("e" . "evaluate/ERC/EWW")
+;;        :desc "Eww web browser" "w" #'eww
+;;        :desc "Eww reload page" "R" #'eww-reload))
 #+end_src
 
 * FONTS
@@ -1477,56 +1468,53 @@ I wrapped most of this block in (after! org).  Without this, my settings might b
 #+begin_src emacs-lisp
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
+
 (after! org
   (setq org-directory "~/Dropbox/Org/"
         org-agenda-files '("~/Dropbox/Org/Agenda")
         org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-ellipsis " ▼ "
         org-superstar-headline-bullets-list '("◉" "●" "○" "◆" "●" "○" "◆")
-        org-superstar-itembullet-alist '((?+ . ?➤) (?- . ?✦)) ; changes +/- symbols in item lists
+        org-superstar-itembullet-alist '((?+ . ?➤) (?- . ?✦)) ; cambia símbolos +/- en listas
         org-log-done 'time
         org-hide-emphasis-markers t
-        ;; ex. of org-link-abbrev-alist in action
-        ;; [[arch-wiki:Name_of_Page][Description]]
-        org-link-abbrev-alist    ; This overwrites the default Doom org-link-abbrev-list
+        ;; org-link-abbrev-alist
+        org-link-abbrev-alist
           '(("google" . "http://www.google.com/search?q=")
             ("arch-wiki" . "https://wiki.archlinux.org/index.php/")
             ("ddg" . "https://duckduckgo.com/?q=")
             ("wiki" . "https://en.wikipedia.org/wiki/"))
         org-table-convert-region-max-lines 20000
-        org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
+        org-todo-keywords
           '((sequence
-             "TODO(t)"           ; A task that is ready to be tackled
-             "IDEA(i)"        ; Some ideas
-             "PROJ(p)"           ; A project that contains other tasks
-             "MAIL(m)"            ; Mails to read
-             "WAIT(w)"           ; Something is holding up this task
-             "|"                 ; The pipe necessary to separate "active" states and "inactive" states
-             "DONE(d)"           ; Task has been completed
-             "CANCELLED(c)" ))) ; Task has been cancelled
+             "TODO(t)"
+             "IDEA(i)"
+             "PROJ(p)"
+             "MAIL(m)"
+             "WAIT(w)"
+             "|"
+             "DONE(d)"
+             "CANCELLED(c)")))
 
-        ;; etiquetas que utilizo para mis notas
-        (setq org-tag-alist '(
-            ("@nota" . ?n)
-            ("@casa" . ?c)
-            ("@entrenamiento" . ?e)
-            ("@fecha" . ?f)
-            ("@salud" . ?s)
-            ("@tarea" . ?t)
-            ("@coche" . ?h)
-            ("@trabajo" . ?t)
-            ("@familia" .?F)
-            ("@Zoe" . ?z)
-            ("@Lucio" . ?l)
-            ("@Linux" .?L)
-            ("@proyecto" .?p)
-            ("@blog" . ?b)
-            ("@estudio" . ?E)
-            ("@web" .?w)
-            ("@mail" .?m)
-            ("@desarrollo" . ?d)
-            )))
-
+  ;; Etiquetas para tus notas (separadas fuera de setq anterior)
+  (setq org-tag-alist '(("@nota" . ?n)
+                        ("@casa" . ?c)
+                        ("@entrenamiento" . ?e)
+                        ("@fecha" . ?f)
+                        ("@salud" . ?s)
+                        ("@tarea" . ?t)
+                        ("@coche" . ?h)
+                        ("@trabajo" . ?T) ; Cambiado a 'T' mayúscula para no colisionar con ?t
+                        ("@familia" . ?F)
+                        ("@Zoe" . ?z)
+                        ("@Lucio" . ?l)
+                        ("@Linux" . ?L)
+                        ("@proyecto" . ?p)
+                        ("@blog" . ?b)
+                        ("@estudio" . ?E)
+                        ("@web" . ?w)
+                        ("@mail" . ?m)
+                        ("@desarrollo" . ?d))))
 #+end_src
 
 * ORG-MODERN
@@ -1571,10 +1559,6 @@ I wrapped most of this block in (after! org).  Without this, my settings might b
  org-hide-emphasis-markers t
  org-pretty-entities t
  org-agenda-tags-column 0)
-
-;; Ellipsis styling
-(setq org-ellipsis "…")
-(set-face-attribute 'org-ellipsis nil :inherit 'default :box nil)
 
 #+end_src
 
@@ -2182,154 +2166,77 @@ See `org-capture-templates' for more information."
 
 * Org-roam
 #+begin_src emacs-lisp
-(use-package org-roam
-  :init
-  (setq org-roam-v2-ack t)
+(use-package! org-roam
   :custom
-  (org-roam-completion-everywhere t)
   (org-roam-directory "~/Dropbox/Org/Roam/")
-  (setq org-roam-node-display-template
-      (concat "${type:15} ${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (org-roam-completion-everywhere t)
+  (org-roam-node-display-template
+   (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-capture-templates
    '(("d" "default" plain "%?"
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n#+EXPORT_FILE_NAME: \n#+filetags: \n#+Reference: ")
-      :unnarrowed t)
-     ("D" "development" plain
-      "* Language: %?\n\n* Reference:\n\n"
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n#+filetags: ")
-      :unnarrowed t)
-     ;; Plantilla RSS integrada
-     ("r" "rss reference" plain
-      "* Detalles del Artículo\n- **Autor:** %:elfeed-author\n- **Medio:** %:elfeed-feed-title\n- **Fecha Original:** %:elfeed-date\n- **Enlace:** %:elfeed-link\n\n* Notas y Apuntes\n%?"
-      :if-new (file+head "%<%Y%m%d%H%M%S>-rss-${slug}.org" 
-                         "#+title: ${title}\n#+date: %U\n#+filetags: :rss:reference:\n#+Reference: %:elfeed-link\n")
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                         "#+title: ${title}\n#+date: %U\n#+filetags:\n#+Reference: ")
       :unnarrowed t)
      ("b" "book notes" plain
-      "* Book Information
-Author: %^{Author}
-Title: %^{Book Title}
-Year: %^{Year}
-Status: %^{Status|Reading|Completed|To Read}
- ,* Summary
-%^{Brief summary}
- ,* Notes
-%?
-"
-      :if-new (file+head "%<%Y%m%d%H%M%S>-book-%^{Slug}.org"
-                        "#+title: %^{Book Title}\n#+date: %U\n#+filetags: book literature\n#+EXPORT_FILE_NAME: \n#+Reference: \n")
+      "* Información\n- Autor: %^{Autor}\n- Año: %^{Año}\n- Estado: %^{Estado|Leyendo|Terminado|Por leer}\n* Resumen\n%?\n* Notas\n"
+      :target (file+head "%<%Y%m%d%H%M%S>-book-${slug}.org"
+                         "#+title: ${title}\n#+date: %U\n#+filetags: :book:literature:\n")
       :unnarrowed t)
-     ("B" "book simple" plain
-           "* Book Details\n- Author: %^{Author}\n- Year: %^{Year}\n- Status: %^{Status|Reading|Completed|To Read}\n- Rating: %^{Rating}/5\n* Summary\n%^{Brief summary}\n* Key Takeaways\n%?\n* Notes"
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                              "#+title: ${title}\n#+date: %U\n#+filetags: book\n#+EXPORT_FILE_NAME: \n#+Reference: %a\n")
-           :unnarrowed t)
-     ("c" "chapter notes" plain
-      "* Chapter: %^{Chapter Number/Name}
-Book: %^{Book Title}
-Pages: %^{Pages}
- ,** Summary
-%^{Chapter summary}
- ,** Key Points
-%?
- ,** Quotes
- ,** Personal Notes
- ,** Questions/Doubts
- ,** Connections
-"
-      :if-new (file+head "%<%Y%m%d%H%M%S>-chapter-%^{Chapter Slug}.org"
-                        "#+title: %^{Chapter Title}\n#+date: %U\n#+filetags: book chapter notes\n#+EXPORT_FILE_NAME: \n#+Reference: \n")
-      :unnarrowed t)
-     ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
+     ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n"
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                         "#+title: ${title}\n#+filetags: :Project:")
       :unnarrowed t)))
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n c" . org-roam-capture)
          ("C-c n f" . org-roam-node-find)
          ("C-c n i" . org-roam-node-insert)
-         ("C-M-i"    . completion-at-point)
+         ("C-c n d" . org-roam-dailies-capture-today)
          ("C-c n y" . org-roam-dailies-capture-yesterday)
-         ("C-c n t" . org-roam-dailies-capture-tomorrow))
+         ("C-c n t" . org-roam-dailies-capture-tomorrow)
+         ("C-M-i"   . completion-at-point))
   :config
   (require 'org-roam-dailies)
-  (org-roam-setup))
+  (org-roam-db-autosync-mode))
 
-;; Función para limpiar títulos duplicados en archivos existentes
-(defun my/fix-duplicate-titles ()
-  "Fix duplicate #+title: prefixes in org-roam files"
-  (interactive)
-  (let ((files (directory-files-recursively org-roam-directory "\\.org$")))
-    (dolist (file files)
-      (with-temp-buffer
-        (insert-file-contents file)
-        (goto-char (point-min))
-        (when (re-search-forward "^#\\+title: #+title: \\(.*\\)$" nil t)
-          (let ((clean-title (match-string 1)))
-            (replace-match (concat "#+title: " clean-title))
-            (write-file file)
-            (message "Fixed title in: %s" file)))))))
+(add-hook 'text-mode-hook #'auto-fill-mode)
+(add-hook 'text-mode-hook #'flyspell-mode)
 
-;; Hooks para modos de texto
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-(add-hook 'text-mode-hook
-          '(lambda () (flyspell-mode 1)))
-#+end_src
-#+begin_src emacs-lisp
-;; =============================================================================
-;; CAPTURA DE ELFEED A ORG-ROAM DEFINITIVA (100% DIRECTA SIN MINIBUFFER)
-;; =============================================================================
-
-(defun my/elfeed-to-org-roam ()
-  "Captura el artículo de Elfeed y crea la nota en Org-roam directamente sin prompts de Vertico."
-  (interactive)
-  (let* ((entry (if (eq major-mode 'elfeed-show-mode)
-                    elfeed-show-entry
-                  (elfeed-search-selected :single)))
-         (title (elfeed-entry-title entry))
-         (link (elfeed-entry-link entry))
-         (author (or (elfeed-meta entry :author) "Desconocido"))
-         (feed-title (elfeed-feed-title (elfeed-entry-feed entry)))
-         (date (format-time-string "%Y-%m-%d %H:%M" (seconds-to-time (elfeed-entry-date entry))))
-         ;; Generamos el ID único (UUID) obligatorio que usa Org-roam para indexar nodos
-         (org-id (org-id-new))
-         ;; SOLUCIÓN: Limpieza de caracteres nativa estándar para crear un slug seguro sin dependencias
-         (clean-slug (let ((string (downcase title)))
-                       (setq string (replace-regexp-in-string "[^a-z0-9 ]" "" string))
-                       (subst-char-in-string ?\s ?_ string)))
-         (file-name (format "%s-rss-%s.org" (format-time-string "%Y%m%d%H%M%S") clean-slug))
-         (file-path (expand-file-name file-name org-roam-directory)))
-    
-    ;; Creación e inyección directa del contenido en el archivo sin pasar por plantillas interactivas
-    (with-temp-file file-path
-      (insert (concat "#+title: " title "\n"
-                      "#+date: " (format-time-string "[%Y-%m-%d %a %H:%M]") "\n"
-                      "#+filetags: :rss:reference:\n"
-                      "#+Reference: " link "\n"
-                      ":PROPERTIES:\n"
-                      ":ID:       " org-id "\n"
-                      ":END:\n\n"
-                      "* Detalles del Artículo\n"
-                      "- **Autor:** " author "\n"
-                      "- **Medio:** " feed-title "\n"
-                      "- **Fecha Original:** " date "\n"
-                      "- **Enlace:** " link "\n\n"
-                      "* Notas y Apuntes\n")))
-    
-    ;; Abrimos el archivo creado en la pantalla y actualizamos la base de datos de Org-roam en segundo plano
-    (find-file file-path)
-    (org-roam-db-update-file file-path)
-    (goto-char (point-max))
-    ;; AUTOMATIZACIÓN: Quitamos la etiqueta 'unread' del artículo en Elfeed
-    (elfeed-untag entry 'unread)
-    (elfeed-search-update-entry entry) ; Refresca la interfaz visual
-    
-    (message "Nota de referencia creada y artículo marcado como leído: %s" file-name)))
-;; Asignación nativa de la tecla 'R' (Mayúscula + R) dentro de Elfeed
-(map! :map elfeed-show-mode-map   :n "R" #'my/elfeed-to-org-roam)
-(map! :map elfeed-search-mode-map :n "R" #'my/elfeed-to-org-roam)
+(after! elfeed
+  (defun my/elfeed-to-org-roam ()
+    "Crea una nota org-roam desde la entrada de elfeed y la marca como leída."
+    (interactive)
+    (let* ((entry (if (eq major-mode 'elfeed-show-mode)
+                      elfeed-show-entry
+                    (elfeed-search-selected :single)))
+           (title (elfeed-entry-title entry))
+           (link (elfeed-entry-link entry))
+           (author (or (plist-get (car (elfeed-meta entry :authors)) :name)
+                       "Desconocido"))
+           (feed (elfeed-feed-title (elfeed-entry-feed entry)))
+           (date (format-time-string "%Y-%m-%d %H:%M"
+                                     (seconds-to-time (elfeed-entry-date entry))))
+           (slug (let ((s (org-roam-node-slug (org-roam-node-create :title title))))
+                   (substring s 0 (min 60 (length s)))))
+           (file (expand-file-name
+                  (format "%s-rss-%s.org" (format-time-string "%Y%m%d%H%M%S") slug)
+                  org-roam-directory)))
+      ;; Primero elfeed, mientras el buffer actual sigue siendo el de elfeed
+      (elfeed-untag entry 'unread)
+      (elfeed-search-update-entry entry)
+      (with-temp-file file
+        (insert (format ":PROPERTIES:\n:ID:       %s\n:END:\n#+title: %s\n#+date: %s\n#+filetags: :rss:reference:\n#+Reference: %s\n\n* Detalles del artículo\n- *Autor:* %s\n- *Medio:* %s\n- *Fecha original:* %s\n- *Enlace:* %s\n\n* Notas y apuntes\n"
+                        (org-id-new) title
+                        (format-time-string "[%Y-%m-%d %a %H:%M]")
+                        link author feed date link)))
+      (find-file file)
+      (org-roam-db-update-file file)
+      (goto-char (point-max))
+      (message "Nota creada: %s" (file-name-nondirectory file))))
+  (map! :map elfeed-show-mode-map   :n "R" #'my/elfeed-to-org-roam)
+  (map! :map elfeed-search-mode-map :n "R" #'my/elfeed-to-org-roam))
 #+end_src
 
 #+RESULTS:
-| (lambda nil (flyspell-mode 1)) | turn-on-auto-fill | +spell-remove-run-together-switch-for-aspell-h | er/add-text-mode-expansions | visual-line-mode | display-line-numbers-mode | vi-tilde-fringe-mode | text-mode-hook-identify |
 
 
 * ORG-ROAM-UI
@@ -3189,5 +3096,31 @@ COMANDOS DENTRO DE UN NOTEBOOK ABIERTO:
   C-x C-s   → guardar el notebook (.ipynb, compatible con Jupyter normal)
 #+end_comment
 
-(after! elfeed
-  (setq elfeed-search-title-max-width 100)) ; Ajusta el número (100) según el ancho de tu monitor
+#+begin_src emacs-lisp
+
+(map! :leader
+      :desc "Switch buffer"           "b b" #'switch-to-buffer
+      :desc "Kill buffer"             "b d" #'kill-current-buffer
+      :desc "Kill buffer"             "b k" #'kill-current-buffer
+      :desc "Kill other buffers"      "b o" #'doom/kill-other-buffers
+      :desc "Kill all buffers"        "b K" #'doom/kill-all-buffers
+      :desc "Ibuffer"                 "b i" #'ibuffer
+      :desc "Next buffer"             "b n" #'next-buffer
+      :desc "Previous buffer"         "b p" #'previous-buffer
+      :desc "Last buffer"             "b l" #'evil-switch-to-windows-last-buffer
+      :desc "Save buffer"             "b s" #'basic-save-buffer
+      :desc "Save all buffers"        "b S" #'evil-write-all
+      :desc "Save and kill buffer"    "b u" #'doom/save-and-kill-buffer
+      :desc "Revert buffer"           "b r" #'revert-buffer
+      :desc "Rename buffer"           "b R" #'rename-buffer
+      :desc "New empty buffer"        "b N" #'evil-buffer-new
+      :desc "Scratch buffer"          "b x" #'doom/open-scratch-buffer
+      :desc "Bury buffer"             "b z" #'bury-buffer
+      :desc "Set bookmark"            "b m" #'bookmark-set
+      :desc "Delete bookmark"         "b M" #'bookmark-delete
+      :desc "List bookmarks"          "b L" #'list-bookmarks
+      :desc "Save bookmarks to file"  "b w" #'bookmark-save
+      :desc "Clone indirect buffer"   "b c" #'clone-indirect-buffer
+      :desc "Clone indirect buffer other window" "b C" #'clone-indirect-buffer-other-window)
+
+#+end_src
