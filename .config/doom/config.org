@@ -537,7 +537,7 @@ If peep-dired is enabled, you will get image previews as you go up/down with 'j'
 Setting the theme to doom-one.  To try out new themes, I set a keybinding for counsel-load-theme with 'SPC h t'.
 
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-gruvbox-light)
+(setq doom-theme 'modus-operandi-tritanopia)
 (map! :leader
       :desc "Load new theme" "h t" #'consult-theme)
 #+end_src
@@ -561,6 +561,18 @@ An RSS newsfeed reader for Emacs.
         ("https://sachachua.com/blog/feed/" emacs tech eng)
         ("https://karthinks.com/index.xml" emacs dev eng)
         ("https://protesilaos.com/master.xml" emacs linux philosophy eng)
+        ("http://planet.emacsen.org/atom.xml" emacs eng)
+        ("http://www.masteringemacs.org/feed/" emacs eng)
+        ("https://www.with-emacs.com/rss.xml" emacs eng)
+        ("https://xenodium.com/rss.xml" emacs eng)
+        ("http://endlessparentheses.com/atom.xml" emacs eng)
+        ("http://emacs-fu.blogspot.com/2008/12/welcome-to-emacs-fu.html" emacs eng)
+        ("http://nullprogram.com/feed/" emacs eng)
+        ("https://irreal.org/blog/?feed=rss2" emacs eng)
+        ("https://tsdh.org/rss.xml" emacs eng)
+        ("https://lepisma.xyz/atom.xml" emacs eng)
+        ("https://olddeuteronomy.github.io/index.xml" emacs eng)
+        ("https://tdodge.consulting/blog/rss.xml" emacs eng)
         ("https://orgmode.org/changes.rss" emacs orgmode)
 
         ;; --- LINUX & ARCHLINUX ---
@@ -576,6 +588,7 @@ An RSS newsfeed reader for Emacs.
         ("https://www.lffl.org/feeds/posts/default" linux tech it)
 
         ;; --- TECNOLOGÍA & CULTURA HACKER ---
+        ("https://lambdaland.org/index.xml" tech eng)
         ("https://hnrss.org/frontpage" tech hacker popular eng)
         ("https://www.lealternative.net/feed/" tech software_libre it)
 
