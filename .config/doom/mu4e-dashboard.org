@@ -1,0 +1,59 @@
+* Mu for Emacs (mu4e)                                        *[[mu:flag:unread and not flag:trashed|%3d Unread][++++++++++]]*
+
+[[mu:flag:unread and not flag:trashed][Unread]] /[[mu:flag:unread and not flag:trashed|(%4d)][(6938)]]/ ............ [u]  [[mu:date:today..now][Today]] /[[mu:date:today..now|(%4d)][(  98)]]/ ............. [t]  *Compose* .................. [C]
+[[mu:m:/INBOX][Inbox]] /[[mu:m:/INBOX|(%4d)][(8002)]]/ ............. [i]  [[mu:date:2d..today and not date:today..now][Yesterday]] /[[mu:date:2d..today and not date:today..now|(%4d)][( 116)]]/ ......... [y]  *Update* ................... [U]
+[[mu:flag:draft][Drafts]] /[[mu:flag:draft|(%4d)][(   3)]]/ ............ [d]  [[mu:date:7d..now][Last week]] /[[mu:date:7d..now|(%4d)][( 473)]]/ ......... [w]  *Search* ................... [/]
+[[mu:from:ezequielcardoso@gmail.com][Sent]] /[[mu:from:ezequielcardoso@gmail.com|(%5d)][( 8692)]]/ ............. [s]  [[mu:date:4w..now][Last month]] /[[mu:date:4w..now|(%5d)][( 2219)]]/ ....... [m]  *Quit* ..................... [q]
+
+* Queries
+
+Escribí *C-c C-c* sobre la línea /CALL/ de abajo para evaluar una consulta.
+*NOTA*: primero hay que desactivar el dashboard (=M-x mu4e-dashboard-mode=).
+
+#+CALL: query("flag:unread", 5)
+#+RESULTS:
+
+* Saved searches
+
+[[mu:flag:attach][Archivos adjuntos]] /[[mu:flag:attach|(%5d)][( 9354)]]/ ... [[mu:flag:attach||100][100]] - [[mu:flag:attach||500][500]] - [[mu:flag:attach||9999][all]]
+[[mu:flag:flagged][Importantes]] /[[mu:flag:flagged|(%5d)][(  865)]]/ ... [[mu:flag:flagged||100][100]] - [[mu:flag:flagged||500][500]] - [[mu:flag:flagged||9999][all]]
+[[mu:hola@zoeraijman.com OR luciocardosoraijman@gmail.com][Familia]] /[[mu:hola@zoeraijman.com OR luciocardosoraijman@gmail.com|(%5d)][( 6859)]]/ ...... [[mu:hola@zoeraijman.com OR luciocardosoraijman@gmail.com||100][100]] - [[mu:hola@zoeraijman.com OR luciocardosoraijman@gmail.com||500][500]] - [[mu:hola@zoeraijman.com OR luciocardosoraijman@gmail.com||9999][all]]
+[[mu:facturas@escueladantecordoba.edu.ar OR escueladantealighieri@miescueladigital.com.ar OR preceptoria1c@escueladantecordoba.edu.ar][Dante Alighieri]] /[[mu:facturas@escueladantecordoba.edu.ar OR escueladantealighieri@miescueladigital.com.ar OR preceptoria1c@escueladantecordoba.edu.ar|(%5d)][(  991)]]/ ... [[mu:facturas@escueladantecordoba.edu.ar OR escueladantealighieri@miescueladigital.com.ar OR preceptoria1c@escueladantecordoba.edu.ar||100][100]] - [[mu:facturas@escueladantecordoba.edu.ar OR escueladantealighieri@miescueladigital.com.ar OR preceptoria1c@escueladantecordoba.edu.ar||500][500]] - [[mu:facturas@escueladantecordoba.edu.ar OR escueladantealighieri@miescueladigital.com.ar OR preceptoria1c@escueladantecordoba.edu.ar||9999][all]]
+[[mu:no-reply@invertironline.com OR invertironline OR no-reply@cocos.capital OR investing.com OR rankia OR noreply@cajadevalores.com.ar OR atencion@cocos.capital][Inversiones]] /[[mu:no-reply@invertironline.com OR invertironline OR no-reply@cocos.capital OR investing.com OR rankia OR noreply@cajadevalores.com.ar OR atencion@cocos.capital|(%5d)][(  810)]]/ ... [[mu:no-reply@invertironline.com OR invertironline OR no-reply@cocos.capital OR investing.com OR rankia OR noreply@cajadevalores.com.ar OR atencion@cocos.capital||100][100]] - [[mu:no-reply@invertironline.com OR invertironline OR no-reply@cocos.capital OR investing.com OR rankia OR noreply@cajadevalores.com.ar OR atencion@cocos.capital||500][500]] - [[mu:no-reply@invertironline.com OR invertironline OR no-reply@cocos.capital OR investing.com OR rankia OR noreply@cajadevalores.com.ar OR atencion@cocos.capital||9999][all]]
+[[mu:emacs OR org OR orgmode OR "org-mode" OR mu4e][Emacs]] /[[mu:emacs OR org OR orgmode OR "org-mode" OR mu4e|(%5d)][( 1424)]]/ ........ [[mu:emacs OR org OR orgmode OR "org-mode" OR mu4e||100][100]] - [[mu:emacs OR org OR orgmode OR "org-mode" OR mu4e||500][500]] - [[mu:emacs OR org OR orgmode OR "org-mode" OR mu4e||9999][all]]
+[[mu:Arch OR arch OR "Arch Linux" OR "arch linux" OR arch-linux OR Arch-Linux][Arch Linux]] /[[mu:Arch OR arch OR "Arch Linux" OR "arch linux" OR arch-linux OR Arch-Linux|(%5d)][(   61)]]/ ... [[mu:Arch OR arch OR "Arch Linux" OR "arch linux" OR arch-linux OR Arch-Linux||100][100]] - [[mu:Arch OR arch OR "Arch Linux" OR "arch linux" OR arch-linux OR Arch-Linux||500][500]] - [[mu:Arch OR arch OR "Arch Linux" OR "arch linux" OR arch-linux OR Arch-Linux||9999][all]]
+[[mu:jr OR remoto OR trabajo OR work OR remote][Búsqueda laboral]] /[[mu:jr OR remoto OR trabajo OR work OR remote|(%5d)][( 5344)]]/ ... [[mu:jr OR remoto OR trabajo OR work OR remote||100][100]] - [[mu:jr OR remoto OR trabajo OR work OR remote||500][500]] - [[mu:jr OR remoto OR trabajo OR work OR remote||9999][all]]
+[[mu:"web dev" OR web OR html OR css OR javascript OR php OR laravel OR python OR wordpress OR programación OR code OR coding][Programación]] /[[mu:"web dev" OR web OR html OR css OR javascript OR php OR laravel OR python OR wordpress OR programación OR code OR coding|(%5d)][(12834)]]/ ... [[mu:"web dev" OR web OR html OR css OR javascript OR php OR laravel OR python OR wordpress OR programación OR code OR coding||100][100]] - [[mu:"web dev" OR web OR html OR css OR javascript OR php OR laravel OR python OR wordpress OR programación OR code OR coding||500][500]] - [[mu:"web dev" OR web OR html OR css OR javascript OR php OR laravel OR python OR wordpress OR programación OR code OR coding||9999][all]]
+
+* Information
+
+*Maildir*   : ~/Maildir
+*Addresses* : [[mailto:ezequielcardoso@gmail.com][<ezequielcardoso@gmail.com>]]
+
+* Configuration
+:PROPERTIES:
+:VISIBILITY: hideall
+:END:
+
+#+STARTUP: showall showstars indent
+
+#+NAME: query
+#+BEGIN_SRC sh :results list raw :var query="flag:unread" count=5
+export LANG="es_AR.UTF-8"; export LC_ALL="es_AR.UTF-8";
+mu find -n $count --sortfield=date --reverse --fields "f s" $query
+#+END_SRC
+
+#+KEYMAP: u | mu4e-search "flag:unread and not flag:trashed"
+#+KEYMAP: i | mu4e-search "m:/INBOX"
+#+KEYMAP: d | mu4e-search "flag:draft"
+#+KEYMAP: s | mu4e-search "from:ezequielcardoso@gmail.com"
+
+#+KEYMAP: t | mu4e-search "date:today..now"
+#+KEYMAP: y | mu4e-search "date:2d..today and not date:today..now"
+#+KEYMAP: w | mu4e-search "date:7d..now"
+#+KEYMAP: m | mu4e-search "date:4w..now"
+
+#+KEYMAP: C | mu4e-compose-new
+#+KEYMAP: U | mu4e-update-mail-and-index t
+#+KEYMAP: / | mu4e-search
+#+KEYMAP: q | kill-current-buffer
