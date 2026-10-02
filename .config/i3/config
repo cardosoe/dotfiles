@@ -251,13 +251,15 @@ exec_always --no-startup-id alacritty;focus
 # exec --no-startup-id vivaldi-stable
 for_window [class="Vivaldi-stable"] focus
 
-# Text-editor
-#exec --no-startup-id emacs --daemon
-# exec --no-startup-id atom
-
 # File manager
  exec --no-startup-id thunar
 # exec --no-startup-id nautilus
+
+# Text-editor
+bindsym mod1+e exec --no-startup-id emacs
+
+# exec --no-startup-id atom
+
 
 # Mail clients
 # exec --no-startup-id evolution
@@ -867,7 +869,7 @@ bar {
     status_command ~/.config/bumblebee-status/bumblebee-status \
      -t moonlight-powerline \
      -p icons=awesome \
-     -m indicator cpu sensors memory datetime
+     -m indicator cpu sensors  memory datetime
 
     colors {
         background $base00
