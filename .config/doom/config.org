@@ -578,8 +578,6 @@ An RSS newsfeed reader for Emacs.
         ;; --- LINUX & ARCHLINUX ---
         ("https://archlinux.org/feeds/news/" arch linux critical)
         ("https://itsfoss.com/feed/" linux tech eng)
-        ("https://www.phoronix.com/rss.php" linux hardware benchmarks eng)
-        ("https://www.gamingonlinux.com/article_rss.php" linux gaming eng)
         ("https://blog.desdelinux.net/feed/" linux blog es)
         ("https://elblogdelazaro.org/feed/" linux blog es)
         ("https://victorhckinthefreeworld.com/feed/" linux blog es)
@@ -589,7 +587,6 @@ An RSS newsfeed reader for Emacs.
 
         ;; --- TECNOLOGÍA & CULTURA HACKER ---
         ("https://lambdaland.org/index.xml" tech eng)
-        ("https://hnrss.org/frontpage" tech hacker popular eng)
         ("https://www.lealternative.net/feed/" tech software_libre it)
 
         ;; --- JOURNALING, MINIMALISMO & PRODUCTIVIDAD ---
